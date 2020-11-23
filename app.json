@@ -1,0 +1,12 @@
+{
+  "name": "check-stocks",
+  "displayName": "check-stocks",
+  "expo": {
+    "name": "check-stocks",
+    "slug": "check-stocks",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
