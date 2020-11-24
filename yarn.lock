@@ -3540,6 +3540,13 @@ expo-font@~8.3.0:
     fbjs "1.0.0"
     fontfaceobserver "^2.1.0"
 
+expo-google-sign-in@~8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/expo-google-sign-in/-/expo-google-sign-in-8.3.0.tgz#802af4ab36003a413a0dbac8ba5066566c5611bb"
+  integrity sha512-A84sdVcWuiolhGx6h+WS6H7teLz0f1xZAqF6LmMmtgGWeFAfsDyTrX068Ej40tohSLUHohm6BemRS8OURxPSpw==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-image-loader@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-1.2.0.tgz#1cf70fc14c45e8595c3d1a2b16f40a53810b4ba4"
@@ -3563,6 +3570,13 @@ expo-linking@~1.0.4:
     expo-constants "~9.2.0"
     qs "^6.5.0"
     url-parse "^1.4.4"
+
+expo-local-authentication@~9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-9.3.0.tgz#5e4bbc73c4b40ce5a2ad3555b51138cddeab37bb"
+  integrity sha512-treB43thcgh7dDt/g+0QrmznhaHF7s6jHVfzi5yO8kdsSkK0uHOyDhAJfAy8oN5d8GQjdmJ5vZIoJw/zE5nJoA==
+  dependencies:
+    invariant "^2.2.4"
 
 expo-location@~9.0.0:
   version "9.0.1"

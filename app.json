@@ -5,8 +5,7 @@
     "name": "check-stocks",
     "slug": "check-stocks",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"]
   }
 }
