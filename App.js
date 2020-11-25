@@ -3,18 +3,39 @@ import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useColorScheme } from 'react-native';
 import LogScreen from './src/components/LogScreen';
-
-export default function App()
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/components/HomeScreen';
+function Home({ navigation })
 {
   const colorScheme = useColorScheme();
   const themeStatusBarStyle = colorScheme === 'light' ? 'dark-content' : 'light-content';
   const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
   const themeContainerStyle =
     colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
-  return (<SafeAreaView style={[styles.container, themeContainerStyle]}>
-    <StatusBar barStyle={themeStatusBarStyle} />
-    <LogScreen fontColor={themeTextStyle} />
-  </SafeAreaView>
+  console.log(navigation);
+  return (
+    <SafeAreaView style={[styles.container, themeContainerStyle]}>
+      <StatusBar barStyle={themeStatusBarStyle} />
+      <LogScreen fontColor={themeTextStyle} handlePress={() => navigation.navigate("Home")} />
+    </SafeAreaView>
+  )
+}
+export default function App()
+{
+  const Stack = createStackNavigator();
+
+  return (
+
+    <NavigationContainer documentTitle={{ enabled: true }}>
+      <Stack.Navigator mode={"modal"} headerMode={"none"}>
+        <Stack.Screen name="Log Screen" component={Home} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
+
+
   );
 }
 

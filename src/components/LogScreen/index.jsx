@@ -10,7 +10,7 @@ class LogScreen extends Component {
     };
   }
   componentDidMount() {
-    this.initG();
+    // this.initG();
   }
   async initG() {
     await Google.initAsync({
@@ -22,17 +22,17 @@ class LogScreen extends Component {
     const user = await Google.signInSilentlyAsync();
     this.setState({ user });
   }
-  handleGoogleAuth() {}
 
   render() {
-    const { fontColor } = this.props;
+    const { fontColor, handlePress } = this.props;
     return (
       <View>
         <InputButton
-          title="Google Sign In"
+          title="oogle Sign In"
           color="#FF3333DD"
           fontColor={fontColor}
-          onPress={this.handleGoogleAuth}
+          useIcon={"logo-google"}
+          onPress={handlePress}
         />
       </View>
     );
