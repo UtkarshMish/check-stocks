@@ -7,10 +7,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import checkBiometric from "./src/utils/biometric.js";
 import HomeScreen from './src/components/HomeScreen';
+import { googleAuth } from './src/utils/googleAuth';
+import { getAuthInfo } from './src/utils/Auth';
+
 async function showHome(navigation)
 {
-  if (await checkBiometric())
+  const userInfo = await getAuthInfo();
+  if (await checkBiometric() && userInfo && userInfo.length != 0)
     navigation.navigate("Home");
+  else {
+    if (await googleAuth())
+      navigation.navigate("Home")
+  }
 }
 function Home({ navigation })
 {
@@ -29,7 +37,6 @@ function Home({ navigation })
 export default function App()
 {
   const Stack = createStackNavigator();
-
   return (
 
     <NavigationContainer documentTitle={{ enabled: true }}>
