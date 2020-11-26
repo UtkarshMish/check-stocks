@@ -17,7 +17,7 @@ class GraphStock extends PureComponent {
   render() {
     if (this.state.data != null) {
       const injectedHTML = `<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-    <div id="container" style="height: 400px; min-width: 310px;"></div>
+    <div id="container"></div>
                                               <script src="https://code.highcharts.com/stock/highstock.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/data.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -29,25 +29,40 @@ Highcharts.stockChart('container', {
         title: {
             text: 'AAPL stock price '
         },
-        yAxis: {
-            tickPixelInterval: 50
-        } ,
+        xAxis: {
+            minRange: 1
+        },
+        time: {
+        useUTC: false
+    },
         rangeSelector: {
+            allButtonsEnabled: true,
             buttons: [{
                 type: 'day',
                 count: 1,
-                text: '1D'
-            }, {
+                text: 'Day',
+                dataGrouping: {
+                  enabled: false,
+                  forced: true,
+                  smoothed : true,
+                }
+            },  {
                 type: 'month',
                 count: 1,
-                text: '1M'
+                text: 'Month',
+            },{
+                type: 'year',
+                count: 1,
+                text: 'Year',
             }, {
                 type: 'all',
-                count: 1,
-                text: '1Y'
-            }],
-            selected: 2,
-            inputEnabled: false
+                text: 'all'
+            }, ],
+            buttonTheme: {
+                width: 45,
+            },
+            selected: 3,
+            inputEnabled:false,
         },
 
         responsive: {
@@ -68,11 +83,23 @@ Highcharts.stockChart('container', {
                 }
             }]
         },
+      legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
         series: [{
             name:'AAPL',
             type: 'area',
             data: data,
-            gapSize: 6,
+            gapSize: 5,
+            marker: {
+                enabled: null,
+                radius: 3,
+                lineWidth: 1,
+                lineColor: '#FFFFFF'
+            },
             tooltip: {
                 valueDecimals: 3
             },

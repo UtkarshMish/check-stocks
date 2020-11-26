@@ -2,7 +2,7 @@ import Axios from "axios";
 import makeDate from "./makeDate";
 async function getStocks()
 {
-  const result = await Axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo");
+  const result = await Axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=60min&adjusted=true&outputsize=compact&apikey=UKEAOISJZL846EKY");
   if (result.status == 200 && Object.keys(result.data).length > 1) {
     return result.data;
   }
@@ -16,11 +16,9 @@ function getStockUpdates(data)
     let dataItems = data[Object.keys(data)[1]];
     const collectedData = Object.keys(dataItems).map((date) => [
       makeDate(date),
-      ...Object.values(dataItems[date]).flatMap((item) => parseFloat(item)),
+      ...Object.values(dataItems[date]).map((item) => Math.round(parseFloat(item) * 100) / 100),
     ]);
     return collectedData;
-  } else {
-    return items;
   }
 }
 export
