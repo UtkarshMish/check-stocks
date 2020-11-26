@@ -5,7 +5,13 @@ import { useColorScheme } from 'react-native';
 import LogScreen from './src/components/LogScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import checkBiometric from "./src/utils/biometric.js";
 import HomeScreen from './src/components/HomeScreen';
+async function showHome(navigation)
+{
+  if (await checkBiometric())
+    navigation.navigate("Home");
+}
 function Home({ navigation })
 {
   const colorScheme = useColorScheme();
@@ -13,11 +19,10 @@ function Home({ navigation })
   const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
   const themeContainerStyle =
     colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
-  console.log(navigation);
   return (
     <SafeAreaView style={[styles.container, themeContainerStyle]}>
       <StatusBar barStyle={themeStatusBarStyle} />
-      <LogScreen fontColor={themeTextStyle} handlePress={() => navigation.navigate("Home")} />
+      <LogScreen fontColor={themeTextStyle} handlePress={() => showHome(navigation)} />
     </SafeAreaView>
   )
 }

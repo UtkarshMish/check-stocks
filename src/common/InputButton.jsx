@@ -28,7 +28,18 @@ const InputButton = ({
     },
   });
   return (
-    <TouchableOpacity {...params} onPress={onPress}>
+    <TouchableOpacity
+      {...params}
+      onPress={onPress}
+      style={{
+        shadowColor: fontColor.color,
+        shadowOffset: { height: 8, width: 8 },
+        shadowOpacity: 1,
+        shadowRadius: 888,
+        borderRadius: radius + 1,
+        elevation: 15,
+      }}
+    >
       <View style={styles.containerButton}>
         <Text style={styles.buttonFonts}>
           <Ionicons name={useIcon} size={30} style={fontColor} />
