@@ -28,10 +28,21 @@ class GraphStock extends PureComponent {
       )};
 Highcharts.stockChart('container', {
         title: {
-            text: 'AAPL stock price '
+            text: 'AAPL stock price ',
+            style: {"color": "${colors.text}"}
+        },
+        yAxis:{
+        labels:{
+        style:{
+          color:"${colors.text}"
+        }
+        }
+        },
+        chart:{
+          backgroundColor:'${colors.background}',
         },
         xAxis: {
-            minRange: 1
+            minRange: 1,
         },
         exporting:false,
         time: {

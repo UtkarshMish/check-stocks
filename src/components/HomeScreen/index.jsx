@@ -8,7 +8,7 @@ export default class HomeScreen extends Component {
     super(props);
     this.state = {
       deviceOrientation: 1,
-      colorScheme: null,
+      scheme: null,
     };
   }
   async componentDidMount() {
@@ -19,16 +19,16 @@ export default class HomeScreen extends Component {
         this.setState({ deviceOrientation: 1 });
       }
     });
-    this.colorScheme = Appearance.addChangeListener(({ colorScheme }) =>
-      this.setState({ colorScheme })
+    this.colorSubscriber = Appearance.addChangeListener(({ colorScheme }) =>
+      this.setState({ scheme: colorScheme })
     );
   }
   async componentWillUnmount() {
     this.Orientation && this.Orientation.remove();
-    this.colorScheme && this.colorScheme.remove();
+    this.colorSubscriber && this.colorSubscriber.remove();
   }
   render() {
-    const { deviceOrientation, colorScheme } = this.state;
+    const { deviceOrientation, scheme } = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <SafeAreaView
@@ -40,7 +40,7 @@ export default class HomeScreen extends Component {
           <Text
             style={[
               styles.mainTitle,
-              colorScheme == "dark" ? styles.textBlack : styles.textWhite,
+              scheme == "dark" ? styles.textBlack : styles.textWhite,
             ]}
           >
             Stocks price per minute
@@ -48,7 +48,7 @@ export default class HomeScreen extends Component {
           <Text
             style={[
               styles.subTitle,
-              colorScheme == "dark" ? styles.subTextBlack : styles.subTextWhite,
+              scheme == "dark" ? styles.subTextBlack : styles.subTextWhite,
             ]}
           >
             using ordinal X axis

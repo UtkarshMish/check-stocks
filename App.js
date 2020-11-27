@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { BackHandler, SafeAreaView, StyleSheet } from 'react-native';
 import { useColorScheme, ToastAndroid } from 'react-native';
 import LogScreen from './src/components/LogScreen';
 import { DarkTheme, DefaultTheme, NavigationContainer, useTheme } from '@react-navigation/native';
@@ -27,6 +27,19 @@ async function showHome(navigation)
 }
 function Home({ navigation })
 {
+  useEffect(() =>
+  {
+    const checkUser = async () =>
+    {
+      if (await getAuthInfo() && await checkBiometric()) {
+        navigation.navigate("Home");
+      }
+      else if (await getAuthInfo()) {
+        BackHandler.exitApp();
+      }
+    }
+    checkUser();
+  }, []);
   const { colors, dark } = useTheme();
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -37,12 +50,14 @@ function Home({ navigation })
 }
 export default function App()
 {
+
+
   const Stack = createStackNavigator();
   const colorScheme = useColorScheme();
   const theme = colorScheme == "dark" ? DarkTheme : DefaultTheme;
   return (
-    <NavigationContainer documentTitle={{ enabled: true }} theme={theme} >
-      <Stack.Navigator mode={"modal"} headerMode={"none"} >
+    <NavigationContainer documentTitle={{ enabled: true }} theme={theme} independent={true} >
+      <Stack.Navigator mode={"modal"} headerMode={"none"} detachInactiveScreens={false} >
         <Stack.Screen name="Log Screen" component={Home} />
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
@@ -58,17 +73,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  lightContainer: {
-    backgroundColor: 'aliceblue',
-  },
-  darkContainer: {
-    backgroundColor: '#122332',
-  },
-  lightThemeText: {
-    color: '#122332',
-  },
-  darkThemeText: {
-    color: 'aliceblue',
-  },
+  }
 });
