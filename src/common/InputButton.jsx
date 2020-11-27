@@ -7,7 +7,7 @@ const InputButton = ({
   height = 50,
   radius = 25,
   color = "blue",
-  fontColor,
+  fontColor = { color: "white" },
   onPress,
   useIcon,
   ...params

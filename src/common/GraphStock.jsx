@@ -15,9 +15,10 @@ class GraphStock extends PureComponent {
     return this.setState({ data });
   }
   render() {
+    const { colors } = this.props;
     if (this.state.data != null) {
       const injectedHTML = `<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-    <div id="container"></div>
+    <div id="container" ></div>
                                               <script src="https://code.highcharts.com/stock/highstock.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/data.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -32,6 +33,7 @@ Highcharts.stockChart('container', {
         xAxis: {
             minRange: 1
         },
+        exporting:false,
         time: {
         useUTC: false
     },
@@ -125,7 +127,7 @@ Highcharts.stockChart('container', {
             injectedJavaScript={injectedJavaScriptValue}
             domStorageEnabled
             source={{ html: injectedHTML }}
-            style={{ width: "100%" }}
+            style={{ width: "100%", backgroundColor: colors.background }}
             allowsFullscreenVideo
           />
         </View>

@@ -1,22 +1,60 @@
+import { DeviceMotion } from "expo-sensors";
 import React, { Component } from "react";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet, Appearance } from "react-native";
 import MainScreen from "../MainScreen";
 
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      deviceOrientation: 1,
+      colorScheme: null,
+    };
   }
-
+  async componentDidMount() {
+    this.Orientation = DeviceMotion.addListener(({ orientation }) => {
+      if (Math.abs(orientation) == 90) {
+        this.setState({ deviceOrientation: 4 });
+      } else {
+        this.setState({ deviceOrientation: 1 });
+      }
+    });
+    this.colorScheme = Appearance.addChangeListener(({ colorScheme }) =>
+      this.setState({ colorScheme })
+    );
+  }
+  async componentWillUnmount() {
+    this.Orientation && this.Orientation.remove();
+    this.colorScheme && this.colorScheme.remove();
+  }
   render() {
-    const { navigation } = this.props;
+    const { deviceOrientation, colorScheme } = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        <SafeAreaView style={styles.titleContainer}>
-          <Text style={styles.mainTitle}> Stocks price per minute </Text>
-          <Text style={styles.subTitle}> using ordinal X axis </Text>
+        <SafeAreaView
+          style={[
+            styles.titleContainer,
+            { display: deviceOrientation == 1 ? "flex" : "none" },
+          ]}
+        >
+          <Text
+            style={[
+              styles.mainTitle,
+              colorScheme == "dark" ? styles.textBlack : styles.textWhite,
+            ]}
+          >
+            Stocks price per minute
+          </Text>
+          <Text
+            style={[
+              styles.subTitle,
+              colorScheme == "dark" ? styles.subTextBlack : styles.subTextWhite,
+            ]}
+          >
+            using ordinal X axis
+          </Text>
         </SafeAreaView>
-        <MainScreen />
+        <MainScreen theme={this.props.theme} />
       </SafeAreaView>
     );
   }
@@ -42,6 +80,17 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 16,
     textAlign: "right",
+  },
+  textBlack: {
+    color: "white",
+  },
+  textWhite: {
+    color: "black",
+  },
+  subTextBlack: {
+    color: "aliceblue",
+  },
+  subTextWhite: {
     color: "grey",
   },
 });
