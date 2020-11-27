@@ -2,10 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { BackHandler, SafeAreaView, StyleSheet } from 'react-native';
 import { useColorScheme, ToastAndroid } from 'react-native';
-import LogScreen from './src/components/LogScreen';
 import { DarkTheme, DefaultTheme, NavigationContainer, useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import checkBiometric from "./src/utils/biometric.js";
+import LogScreen from './src/components/LogScreen';
 import HomeScreen from './src/components/HomeScreen';
 import { googleAuth } from './src/utils/googleAuth';
 import { getAuthInfo } from './src/utils/Auth';
@@ -17,7 +17,7 @@ async function showHome(navigation)
     ToastAndroid.show(`Welcome ${userInfo.name}`, ToastAndroid.LONG);
     navigation.navigate("Home");
   }
-  else {
+  else if (!userInfo) {
     if (await googleAuth()) {
       const user = await getAuthInfo();
       ToastAndroid.show(`Welcome ${user.name}`, ToastAndroid.LONG);

@@ -19,8 +19,6 @@ async function googleAuth()
     if (type == "success") {
       await setAuthInfo(user);
     }
-
-    console.log(type)
     return type == "success" ? true : false;
   }
   catch (error) {
