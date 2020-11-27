@@ -3,18 +3,22 @@ import { View, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { getStocks, getStockUpdates } from "../utils/getStocks";
 
-class GraphStock extends PureComponent {
-  constructor(props) {
+class GraphStock extends PureComponent
+{
+  constructor(props)
+  {
     super(props);
     this.state = {
       data: null,
     };
   }
-  async componentDidMount() {
+  async componentDidMount()
+  {
     const data = getStockUpdates(await getStocks()) || [];
     return this.setState({ data });
   }
-  render() {
+  render()
+  {
     const { colors } = this.props;
     if (this.state.data != null) {
       const injectedHTML = `<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
@@ -46,7 +50,7 @@ Highcharts.stockChart('container', {
         },
         exporting:false,
         time: {
-        useUTC: false
+        useUTC: true
     },
         rangeSelector: {
             allButtonsEnabled: true,

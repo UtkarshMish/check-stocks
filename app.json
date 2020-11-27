@@ -16,7 +16,16 @@
     "android": {
       "package": "com.student.checkStocks",
       "versionCode": 1,
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyD-ObFm6Bjxg1J_NUB1XSVIDpwb0QchD38"
+        }
+      }
+    },
+    "google": {
+      "androidStandaloneAppClientId": "837990584120-2msdh5tldh1m930es11g24btlohec58u.apps.googleusercontent.com",
+      "androidClientId": "837990584120-66jqvguk63pcst7tv2e9643pcq7v4s56.apps.googleusercontent.com"
     },
     "ios": {
       "supportsTablet": true
