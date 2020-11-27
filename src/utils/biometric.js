@@ -15,7 +15,7 @@ export default async function checkBiometric()
       ToastAndroid.showWithGravity("Authentication Failed ! Try Again !", ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     }
   }
-  else {
+  else if ((hasHardware && !hasEnrolled)) {
     return true;
   }
   return false;

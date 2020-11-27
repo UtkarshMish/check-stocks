@@ -56,8 +56,8 @@ export default function App()
   const colorScheme = useColorScheme();
   const theme = colorScheme == "dark" ? DarkTheme : DefaultTheme;
   return (
-    <NavigationContainer documentTitle={{ enabled: true }} theme={theme} independent={true} >
-      <Stack.Navigator mode={"modal"} headerMode={"none"} detachInactiveScreens={false} >
+    <NavigationContainer documentTitle={{ enabled: true }} theme={theme}  >
+      <Stack.Navigator mode={"modal"} headerMode={"none"}  >
         <Stack.Screen name="Log Screen" component={Home} />
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>

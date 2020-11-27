@@ -8,17 +8,26 @@ const _configs = {
 };
 async function googleAuth()
 {
-  const { type, accessToken, user } = await Google.logInAsync(_configs);
-  let userInfoResponse = await Axios.get(
-    "https://www.googleapis.com/userinfo/v2/me",
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
+  try {
+    const { type, accessToken, user } = await Google.logInAsync(_configs);
+    let userInfoResponse = await Axios.get(
+      "https://www.googleapis.com/userinfo/v2/me",
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+    if (type == "success") {
+      await setAuthInfo(user);
     }
-  );
-  if (type == "success")
-    await setAuthInfo(user);
-  return type == "success" ? true : false;
+
+    console.log(type)
+    return type == "success" ? true : false;
+  }
+  catch (error) {
+    return false;
+  }
 }
+
 export
 {
   googleAuth
