@@ -177,6 +177,7 @@ Highcharts.stockChart('container', {
 export default GraphStock;
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     width: "100%",
     height: "100%",
