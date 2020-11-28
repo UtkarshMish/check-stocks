@@ -60,7 +60,7 @@ export default class HomeScreen extends Component
             using ordinal X axis
           </Text>
         </SafeAreaView>
-        <MainScreen theme={this.props.theme} style={{ flex: this.state.deviceOrientation == 1 ? 0.7 : 1 }} />
+        <MainScreen theme={this.props.theme} style={{ flex: this.state.deviceOrientation == 1 ? 0.75 : 1 }} />
       </SafeAreaView>
     );
   }

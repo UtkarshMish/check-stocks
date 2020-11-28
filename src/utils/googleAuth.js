@@ -1,10 +1,12 @@
 import * as Google from "expo-google-app-auth";
+import * as AppAuth from "expo-app-auth";
 
 import { setAuthInfo, setTokenInfo } from "./Auth";
 const _configs = {
   androidClientId: "837990584120-66jqvguk63pcst7tv2e9643pcq7v4s56.apps.googleusercontent.com",
   androidStandaloneAppClientId: "837990584120-2msdh5tldh1m930es11g24btlohec58u.apps.googleusercontent.com",
   scopes: ["profile", "email"],
+  redirectUrl: `${AppAuth.OAuthRedirect}:/oauthredirect`
 };
 async function googleAuth()
 {
