@@ -23,7 +23,8 @@
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleSignIn": {
-          "apiKey": "AIzaSyD-ObFm6Bjxg1J_NUB1XSVIDpwb0QchD38"
+          "apiKey": "AIzaSyD-ObFm6Bjxg1J_NUB1XSVIDpwb0QchD38",
+          "certificateHash": "786B20D3783A0E0DCC93011421FA1809B2736B86"
         }
       }
     },
