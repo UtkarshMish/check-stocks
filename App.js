@@ -28,13 +28,12 @@ async function showHome(navigation)
 function Home({ navigation })
 {
 
-  const { colors, dark } = useTheme() || null;
+  const { colors } = useTheme() || null;
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <StatusBar barStyle={dark ? 'dark-content' : 'light-content'} />
       <LogScreen fontColor={{ color: colors.text }} handlePress={() => showHome(navigation)} navigation={navigation} />
     </SafeAreaView>
-  )
+  );
 }
 export default function App()
 {
@@ -61,6 +60,7 @@ export default function App()
   }
   return (
     <NavigationContainer documentTitle={{ enabled: false }} theme={theme}  >
+      <StatusBar barStyle={colorScheme == "dark" ? 'dark-content' : 'light-content'} />
       <Stack.Navigator mode={"modal"} headerMode={"none"} >
         {!userExist ? <Stack.Screen name="Log Screen" component={Home} /> : null}
         <Stack.Screen name="Home" component={HomeScreen} />
