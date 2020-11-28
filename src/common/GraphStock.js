@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { getStocks, getStockUpdates } from "../utils/getStocks";
 import Loader from "./Loader";
 import loadingAnimation from "../../assets/loading-animation.json";
-class GraphStock extends PureComponent
+class GraphStock extends Component
 {
   constructor(props)
   {
@@ -16,21 +16,21 @@ class GraphStock extends PureComponent
   async componentDidMount()
   {
     const stockData = await getStocks();
-    const data = getStockUpdates(stockData) || null;
+    const data = JSON.stringify(getStockUpdates(stockData)) || null;
     return this.setState({ data });
   }
   render()
   {
     const { colors } = this.props;
-    if (this.state.data && this.state.data.length > 1) {
+    const { data } = this.state;
+    if (data && data.length > 1) {
       const injectedHTML = `<head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"></head>
     <div id="container" ></div><script src="https://code.highcharts.com/stock/highstock.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/data.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
                                               <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>`;
-      const injectedJavaScriptValue = `const data =  ${JSON.stringify(
-        this.state.data
-      )};
+      const injectedJavaScriptValue = `
+      const data =  ${data};
 Highcharts.stockChart('container', {
         title: {
             text: 'AAPL stock price ',
@@ -47,12 +47,15 @@ Highcharts.stockChart('container', {
           backgroundColor:'${colors.background}',
         },
         xAxis: {
-            minRange: 1,
+        type: 'datetime',
+        ordinal:false,
+        labels:{
+        style:{
+          color:"${colors.text}"
+        }
+        }
         },
         exporting:false,
-        time: {
-        useUTC: true
-    },
         rangeSelector: {
             allButtonsEnabled: true,
             buttons: [{
@@ -67,7 +70,12 @@ Highcharts.stockChart('container', {
             }, {
                 type: 'month',
                 count: 1,
-                text: '1M'
+                text: '1M',
+                dataGrouping: {
+                  enabled: false,
+                  forced: true,
+                  smoothed : true,
+                }
             },
             {
                 type: 'year',
@@ -76,9 +84,9 @@ Highcharts.stockChart('container', {
             },
             {
                 type: 'all',
-                text: 'All'
+                text: 'All',
             }],
-            selected: 1,
+            selected: 2,
             buttonTheme: {
                 width: 45,
             },
@@ -142,6 +150,7 @@ Highcharts.stockChart('container', {
         <View style={styles.container}>
           <WebView
             injectedJavaScript={injectedJavaScriptValue}
+
             domStorageEnabled
             source={{ html: injectedHTML }}
             style={{ width: "100%", backgroundColor: colors.background }}
@@ -151,8 +160,9 @@ Highcharts.stockChart('container', {
             showsHorizontalScrollIndicator={false}
             focusable={true}
             overScrollMode={"never"}
-            bounces={false}
             scalesPageToFit={true}
+            renderToHardwareTextureAndroid={true}
+            removeClippedSubviews={true}
             renderLoading={() => <Loader displayAnimation={loadingAnimation} title={"Loading ..."} />}
             cacheEnabled
           />

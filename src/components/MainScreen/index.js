@@ -1,13 +1,13 @@
-import { DefaultTheme, useTheme } from "@react-navigation/native";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import GraphStock from "../../common/GraphStock";
+import { DefaultTheme, useTheme } from "@react-navigation/native";
 
 export default function MainScreen({ style })
 {
   const { colors } = useTheme() || DefaultTheme;
   return (
-    <View
+    <SafeAreaView
       style={[
         styles.container,
         { backgroundColor: colors.background, color: colors.text },
@@ -15,7 +15,7 @@ export default function MainScreen({ style })
       ]}
     >
       <GraphStock colors={colors} />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
-import { BackHandler, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { BackHandler, SafeAreaView, StyleSheet, View } from 'react-native';
 import { useColorScheme, ToastAndroid } from 'react-native';
 import { DarkTheme, DefaultTheme, NavigationContainer, useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,11 +9,10 @@ import LogScreen from './src/components/LogScreen';
 import HomeScreen from './src/components/HomeScreen';
 import { googleAuth } from './src/utils/googleAuth';
 import { getAuthInfo } from './src/utils/Auth';
-
 async function showHome(navigation)
 {
   const userInfo = await getAuthInfo();
-  if (await checkBiometric() && userInfo && userInfo.length != 0) {
+  if (await checkBiometric() && userInfo && userInfo.name.length != 0) {
     ToastAndroid.show(`Welcome ${userInfo.name}`, ToastAndroid.LONG);
     return navigation.navigate("Home");
   }
@@ -28,19 +27,8 @@ async function showHome(navigation)
 }
 function Home({ navigation })
 {
-  useEffect(() =>
-  {
-    (async () =>
-    {
-      if (await getAuthInfo() && await checkBiometric()) {
-        navigation.navigate("Home");
-      }
-      else if (await getAuthInfo()) {
-        BackHandler.exitApp();
-      }
-    })();
-  }, []);
-  const { colors, dark } = useTheme();
+
+  const { colors, dark } = useTheme() || null;
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <StatusBar barStyle={dark ? 'dark-content' : 'light-content'} />
@@ -50,15 +38,31 @@ function Home({ navigation })
 }
 export default function App()
 {
-
+  const [userExist, setUserExist] = useState(null);
+  useEffect(() =>
+  {
+    (async () =>
+    {
+      if (await getAuthInfo() && await checkBiometric()) {
+        return setUserExist(true);
+      }
+      else if (await getAuthInfo()) {
+        BackHandler.exitApp();
+      }
+      return setUserExist(false);
+    })();
+  }, []);
 
   const Stack = createStackNavigator();
   const colorScheme = useColorScheme();
   const theme = colorScheme == "dark" ? DarkTheme : DefaultTheme;
+  if (userExist === null) {
+    return <View></View>;
+  }
   return (
-    <NavigationContainer documentTitle={{ enabled: true }} theme={theme}  >
-      <Stack.Navigator mode={"modal"} headerMode={"none"}  >
-        <Stack.Screen name="Log Screen" component={Home} />
+    <NavigationContainer documentTitle={{ enabled: false }} theme={theme}  >
+      <Stack.Navigator mode={"modal"} headerMode={"none"} >
+        {!userExist ? <Stack.Screen name="Log Screen" component={Home} /> : null}
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
