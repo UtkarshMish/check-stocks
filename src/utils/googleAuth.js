@@ -4,7 +4,7 @@ import * as Google from "expo-google-app-auth";
 import { setAuthInfo } from "./Auth";
 const _configs = {
   androidClientId: "837990584120-66jqvguk63pcst7tv2e9643pcq7v4s56.apps.googleusercontent.com",
-  androidStandaloneAppClientId: "837990584120-2msdh5tldh1m930es11g24btlohec58u.apps.googleusercontent.com",
+  androidStandaloneAppClientId: "837990584120-66jqvguk63pcst7tv2e9643pcq7v4s56.apps.googleusercontent.com",
   scopes: ["profile", "email"],
 };
 async function googleAuth()
@@ -20,7 +20,6 @@ async function googleAuth()
     if (type == "success") {
       await setAuthInfo(user);
     }
-    console.log(type, accessToken, user);
     return type == "success" ? true : false;
   }
   catch (error) {

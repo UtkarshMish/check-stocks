@@ -3,13 +3,15 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import GraphStock from "../../common/GraphStock";
 
-export default function MainScreen() {
+export default function MainScreen({ style })
+{
   const { colors } = useTheme() || DefaultTheme;
   return (
     <View
       style={[
         styles.container,
         { backgroundColor: colors.background, color: colors.text },
+        style
       ]}
     >
       <GraphStock colors={colors} />
@@ -19,7 +21,6 @@ export default function MainScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     height: 420,
   },
   stockChart: {

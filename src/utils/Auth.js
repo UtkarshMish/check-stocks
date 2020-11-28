@@ -1,7 +1,8 @@
 import * as SecureStore from "expo-secure-store";
 async function getAuthInfo()
 {
-  if (await SecureStore.isAvailableAsync()) {
+  const storageAvailable = await SecureStore.isAvailableAsync();
+  if (storageAvailable) {
     const user = await SecureStore.getItemAsync("user");
     if (user && user.length != 0)
       return JSON.parse(user);
@@ -10,8 +11,9 @@ async function getAuthInfo()
 }
 async function setAuthInfo(user)
 {
-  if (SecureStore.isAvailableAsync() && user && user.length != 0) {
-    await SecureStore.setItemAsync("user", JSON.stringify(user))
+  const storageAvailable = await SecureStore.isAvailableAsync();
+  if (storageAvailable && user && user.length != 0) {
+    await SecureStore.setItemAsync("user", JSON.stringify(user));
   }
 } export
 {

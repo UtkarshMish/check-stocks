@@ -15,13 +15,14 @@ async function showHome(navigation)
   const userInfo = await getAuthInfo();
   if (await checkBiometric() && userInfo && userInfo.length != 0) {
     ToastAndroid.show(`Welcome ${userInfo.name}`, ToastAndroid.LONG);
-    navigation.navigate("Home");
+    return navigation.navigate("Home");
   }
   else if (!userInfo) {
     if (await googleAuth()) {
       const user = await getAuthInfo();
-      ToastAndroid.show(`Welcome ${user.name}`, ToastAndroid.LONG);
-      navigation.navigate("Home");
+      if (user)
+        ToastAndroid.show(`Welcome ${user.name}`, ToastAndroid.LONG);
+      return navigation.navigate("Home");
     }
   }
 }
@@ -29,7 +30,7 @@ function Home({ navigation })
 {
   useEffect(() =>
   {
-    const checkUser = async () =>
+    (async () =>
     {
       if (await getAuthInfo() && await checkBiometric()) {
         navigation.navigate("Home");
@@ -37,8 +38,7 @@ function Home({ navigation })
       else if (await getAuthInfo()) {
         BackHandler.exitApp();
       }
-    }
-    checkUser();
+    })();
   }, []);
   const { colors, dark } = useTheme();
   return (

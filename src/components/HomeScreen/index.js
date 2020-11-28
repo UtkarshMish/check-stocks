@@ -3,16 +3,20 @@ import React, { Component } from "react";
 import { SafeAreaView, Text, StyleSheet, Appearance } from "react-native";
 import MainScreen from "../MainScreen";
 
-export default class HomeScreen extends Component {
-  constructor(props) {
+export default class HomeScreen extends Component
+{
+  constructor(props)
+  {
     super(props);
     this.state = {
       deviceOrientation: 1,
       scheme: null,
     };
   }
-  async componentDidMount() {
-    this.Orientation = DeviceMotion.addListener(({ orientation }) => {
+  async componentDidMount()
+  {
+    this.Orientation = DeviceMotion.addListener(({ orientation }) =>
+    {
       if (Math.abs(orientation) == 90) {
         this.setState({ deviceOrientation: 4 });
       } else {
@@ -23,11 +27,13 @@ export default class HomeScreen extends Component {
       this.setState({ scheme: colorScheme })
     );
   }
-  async componentWillUnmount() {
+  async componentWillUnmount()
+  {
     this.Orientation && this.Orientation.remove();
     this.colorSubscriber && this.colorSubscriber.remove();
   }
-  render() {
+  render()
+  {
     const { deviceOrientation, scheme } = this.state;
     return (
       <SafeAreaView style={styles.container}>
@@ -54,7 +60,7 @@ export default class HomeScreen extends Component {
             using ordinal X axis
           </Text>
         </SafeAreaView>
-        <MainScreen theme={this.props.theme} />
+        <MainScreen theme={this.props.theme} style={{ flex: this.state.deviceOrientation == 1 ? 0.7 : 1 }} />
       </SafeAreaView>
     );
   }
