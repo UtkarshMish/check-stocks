@@ -66,3 +66,4 @@ web-build/
 
 #env
 .env
+google-services.json
